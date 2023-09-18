@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export function Logo() {
   return (
     <div className="logo">
@@ -9,8 +7,7 @@ export function Logo() {
   );
 }
 
-export function Search() {
-  const [query, setQuery] = useState("");
+export function Search({ query, setQuery }) {
   return (
     <input
       className="search"
@@ -22,10 +19,10 @@ export function Search() {
   );
 }
 
-export function Results({ movies }) {
+export function Results({ movies, error }) {
   return (
     <p className="num-results">
-      Found <strong>{movies.length}</strong> results
+      Found <strong>{error ? "0" : movies.length}</strong> results
     </p>
   );
 }
