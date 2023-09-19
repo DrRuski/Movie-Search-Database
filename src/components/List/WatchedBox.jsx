@@ -123,6 +123,20 @@ export function MovieDetails({
   }
 
   useEffect(() => {
+    function callback(e) {
+      if (e.code === "Escape") {
+        onCloseMovie();
+      }
+    }
+
+    document.addEventListener("keydown", callback);
+
+    return function () {
+      document.removeEventListener("keydown", callback);
+    };
+  }, [onCloseMovie]);
+
+  useEffect(() => {
     async function getMovieDetails() {
       try {
         setIsLoading(true);
@@ -138,6 +152,15 @@ export function MovieDetails({
     }
     getMovieDetails();
   }, [selectedId]);
+
+  useEffect(() => {
+    if (!title) return;
+    document.title = `Movie | ${title}`;
+
+    return function () {
+      document.title = "usePopcorn";
+    };
+  }, [title]);
 
   return (
     <div className="details">
@@ -180,7 +203,7 @@ export function MovieDetails({
                 </>
               ) : (
                 <p>
-                  You have already rated this movie - {watchedUserRating}{" "}
+                  You have already rated this movie | {watchedUserRating}{" "}
                   <span>⭐</span>
                 </p>
               )}
